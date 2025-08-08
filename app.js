@@ -22,7 +22,7 @@ const connectDB = require("./db/connect");
 
 app.use(express.json());
 // extra packages
-app.use("trust proxy", 1);
+app.set("trust proxy", 1);
 app.use(
   rateLimiter({
     windowsMs: 15 * 60 * 1000, // 15minutes
