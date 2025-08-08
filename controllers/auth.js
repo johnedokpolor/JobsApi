@@ -1,0 +1,28 @@
+const response = require("../displayResponse");
+const { BadRequestError, UnauthenticatedError } = require("../errors");
+const User = require("../models/User");
+
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    throw new BadRequestError("Please provide email and password");
+  }
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new UnauthenticatedError("Invalid Email");
+  }
+  const isPasswordCorrect = await user.comparePassword(password);
+  if (!isPasswordCorrect) {
+    throw new UnauthenticatedError("Invalid Password");
+  }
+  const token = user.createJWT();
+  response(res, 200, { user, token });
+};
+const register = async (req, res) => {
+  const user = await User.create(req.body);
+  const token = user.createJWT();
+
+  response(res, 201, { user, token });
+};
+
+module.exports = { login, register };
