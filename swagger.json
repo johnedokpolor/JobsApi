@@ -1,0 +1,323 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Jobs  API",
+    "contact": {
+      "name": "VybeCoder",
+      "link": "https://x.com/vybe_coder"
+    },
+    "description": "The **Jobs Portal API** allows users to register, log in, and manage job listings. Authenticated users can create, view, update, and delete jobs. The API uses JWT-based authentication to protect job-related endpoints.\n\n## Features\n- User registration and login\n- JWT authentication\n- Create, read, update, and delete job postings\n- Protected routes for job management\n\n## Base URL\n`https://jobsapi-q57r.onrender.com/api/v1`\n\n> This API is intended for use in web and mobile applications that require job management functionality.",
+
+    "version": "1.0"
+  },
+  "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",
+  "servers": [
+    {
+      "url": "https://jobsapi-q57r.onrender.com/api/v1",
+      "variables": {}
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Register User",
+        "operationId": "RegisterUser",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Register-user-Request"
+                  },
+                  {
+                    "examples": [
+                      {
+                        "name": "Vybe",
+                        "email": "vybecder@gmail.com",
+                        "password": "vybecoder"
+                      }
+                    ]
+                  }
+                ],
+                "contentMediaType": "application/json"
+              },
+              "example": {
+                "name": "Vybe",
+                "email": "vybecder@gmail.com",
+                "password": "vybecoder"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": []
+      },
+      "parameters": []
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login User",
+        "operationId": "LoginUser",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Login-user-Request"
+                  },
+                  {
+                    "examples": [
+                      {
+                        "email": "vybecoder@gmail.com",
+                        "password": "vybecoder"
+                      }
+                    ]
+                  }
+                ],
+                "contentMediaType": "application/json"
+              },
+              "example": {
+                "email": "vybecoder@gmail.com",
+                "password": "vybecoder"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": []
+      },
+      "parameters": []
+    },
+    "/jobs": {
+      "post": {
+        "tags": ["Jobs"],
+        "summary": "Create Job",
+        "operationId": "CreateJob",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Create-job-Request"
+                  },
+                  {
+                    "examples": [
+                      {
+                        "email": "vybecoder@gmail.com",
+                        "password": "vybecoder"
+                      }
+                    ]
+                  }
+                ],
+                "contentMediaType": "application/json"
+              },
+              "example": {
+                "email": "vybecoder@gmail.com",
+                "password": "vybecoder"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "parameters": []
+    },
+    "/": {
+      "get": {
+        "tags": ["Jobs"],
+        "summary": "Get All Jobs",
+        "operationId": "GetAllJobs",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "parameters": []
+    },
+    "/jobs/{id}": {
+      "get": {
+        "tags": ["Jobs"],
+        "summary": "Get Single Job",
+        "operationId": "GetSingleJob",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": ["Jobs"],
+        "summary": "Update Job",
+        "operationId": "UpdateJob",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Jobs"],
+        "summary": "Delete Job",
+        "operationId": "DeleteJob",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "parameters": []
+    }
+  },
+  "components": {
+    "schemas": {
+      "Register-user-Request": {
+        "title": "Register-user-Request",
+        "required": ["name", "email", "password"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "examples": [
+          {
+            "name": "Vybe",
+            "email": "vybecder@gmail.com",
+            "password": "vybecoder"
+          }
+        ]
+      },
+      "Login-user-Request": {
+        "title": "Login-user-Request",
+        "required": ["email", "password"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "examples": [
+          {
+            "email": "vybecoder@gmail.com",
+            "password": "vybecoder"
+          }
+        ]
+      },
+      "Create-job-Request": {
+        "title": "Create-job-Request",
+        "required": ["email", "password"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "examples": [
+          {
+            "email": "vybecoder@gmail.com",
+            "password": "vybecoder"
+          }
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": ""
+    },
+    {
+      "name": "Jobs",
+      "description": ""
+    }
+  ]
+}

@@ -2,7 +2,11 @@ require("dotenv").config();
 require("express-async-errors");
 const express = require("express");
 const app = express();
+const fs = require("fs");
 
+// Swagger imports
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = JSON.parse(fs.readFileSync("./swagger.json", "utf8"));
 // extra security packages
 const helmet = require("helmet");
 const cors = require("cors");
@@ -34,6 +38,11 @@ app.use(cors());
 app.use(xss());
 
 // routes
+app.get("/", (req, res) => {
+  res.send('<h1>Jobs API</h1><a href="/api-docs">API Documentation</a>');
+});
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authenticateUser, jobsRouter);
 
