@@ -1,20 +1,17 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Jobs  API",
-    "contact": {
-      "name": "VybeCoder",
-      "link": "https://x.com/vybe_coder"
-    },
-    "description": "The **Jobs Portal API** allows users to register, log in, and manage job listings. Authenticated users can create, view, update, and delete jobs. The API uses JWT-based authentication to protect job-related endpoints.\n\n## Features\n- User registration and login\n- JWT authentication\n- Create, read, update, and delete job postings\n- Protected routes for job management\n\n## Base URL\n`https://jobsapi-q57r.onrender.com/api/v1`\n\n> This API is intended for use in web and mobile applications that require job management functionality.",
+    "title": "Jobs API",
+    "version": "1.0",
+    "description": "The **Jobs Portal API** allows users to register, log in, and manage job listings. Authenticated users can create, view, update, and delete jobs. The API uses JWT-based authentication to protect job-related endpoints.\n\n## Features\n- User registration and login\n- JWT authentication\n- Create, read, update, and delete job postings\n- Protected routes for job management\n\n. This API is intended for use in web and mobile applications that require job management functionality.\n\n[🔗 Follow VybeCoder on X (Twitter)](https://x.com/vybe_coder)",
 
-    "version": "1.0"
+    "contact": {
+      "name": "VybeCoder"
+    }
   },
-  "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",
   "servers": [
     {
-      "url": "https://jobsapi-q57r.onrender.com/api/v1",
-      "variables": {}
+      "url": "https://jobsapi-q57r.onrender.com/api/v1"
     }
   ],
   "paths": {
@@ -23,27 +20,12 @@
         "tags": ["Auth"],
         "summary": "Register User",
         "operationId": "RegisterUser",
-        "parameters": [],
         "requestBody": {
-          "description": "",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Register-user-Request"
-                  },
-                  {
-                    "examples": [
-                      {
-                        "name": "Vybe",
-                        "email": "vybecder@gmail.com",
-                        "password": "vybecoder"
-                      }
-                    ]
-                  }
-                ],
-                "contentMediaType": "application/json"
+                "$ref": "#/components/schemas/Register-user-Request"
               },
               "example": {
                 "name": "Vybe",
@@ -51,255 +33,144 @@
                 "password": "vybecoder"
               }
             }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
           }
         },
-        "deprecated": false,
-        "security": []
-      },
-      "parameters": []
+        "responses": {
+          "200": { "description": "User registered successfully" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      }
     },
     "/auth/login": {
       "post": {
         "tags": ["Auth"],
         "summary": "Login User",
         "operationId": "LoginUser",
-        "parameters": [],
         "requestBody": {
-          "description": "",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Login-user-Request"
-                  },
-                  {
-                    "examples": [
-                      {
-                        "email": "vybecoder@gmail.com",
-                        "password": "vybecoder"
-                      }
-                    ]
-                  }
-                ],
-                "contentMediaType": "application/json"
+                "$ref": "#/components/schemas/Login-user-Request"
               },
               "example": {
                 "email": "vybecoder@gmail.com",
                 "password": "vybecoder"
               }
             }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
           }
         },
-        "deprecated": false,
-        "security": []
-      },
-      "parameters": []
+        "responses": {
+          "200": { "description": "User logged in successfully" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      }
     },
     "/jobs": {
       "post": {
         "tags": ["Jobs"],
         "summary": "Create Job",
         "operationId": "CreateJob",
-        "parameters": [],
+        "security": [{ "bearer": [] }],
         "requestBody": {
-          "description": "",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Create-job-Request"
-                  },
-                  {
-                    "examples": [
-                      {
-                        "email": "vybecoder@gmail.com",
-                        "password": "vybecoder"
-                      }
-                    ]
-                  }
-                ],
-                "contentMediaType": "application/json"
+                "$ref": "#/components/schemas/Create-job-Request"
               },
               "example": {
-                "email": "vybecoder@gmail.com",
-                "password": "vybecoder"
+                "company": "Google",
+                "position": "Intern"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
+          "200": { "description": "Job created successfully" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
       },
-      "parameters": []
-    },
-    "/": {
       "get": {
         "tags": ["Jobs"],
         "summary": "Get All Jobs",
         "operationId": "GetAllJobs",
-        "parameters": [],
+        "security": [{ "bearer": [] }],
         "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
-      },
-      "parameters": []
+          "200": { "description": "List of jobs" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      }
     },
     "/jobs/{id}": {
       "get": {
         "tags": ["Jobs"],
         "summary": "Get Single Job",
         "operationId": "GetSingleJob",
-        "parameters": [],
+        "security": [{ "bearer": [] }],
         "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
+          "200": { "description": "Job details" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
       },
       "patch": {
         "tags": ["Jobs"],
         "summary": "Update Job",
         "operationId": "UpdateJob",
-        "parameters": [],
+        "security": [{ "bearer": [] }],
         "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
+          "200": { "description": "Job updated successfully" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
       },
       "delete": {
         "tags": ["Jobs"],
         "summary": "Delete Job",
         "operationId": "DeleteJob",
-        "parameters": [],
+        "security": [{ "bearer": [] }],
         "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
-      },
-      "parameters": []
+          "200": { "description": "Job deleted successfully" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
       "Register-user-Request": {
-        "title": "Register-user-Request",
-        "required": ["name", "email", "password"],
         "type": "object",
+        "required": ["name", "email", "password"],
         "properties": {
-          "name": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        },
-        "examples": [
-          {
-            "name": "Vybe",
-            "email": "vybecder@gmail.com",
-            "password": "vybecoder"
-          }
-        ]
+          "name": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        }
       },
       "Login-user-Request": {
-        "title": "Login-user-Request",
-        "required": ["email", "password"],
         "type": "object",
+        "required": ["email", "password"],
         "properties": {
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        },
-        "examples": [
-          {
-            "email": "vybecoder@gmail.com",
-            "password": "vybecoder"
-          }
-        ]
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        }
       },
       "Create-job-Request": {
-        "title": "Create-job-Request",
-        "required": ["email", "password"],
         "type": "object",
+        "required": ["company", "position"],
         "properties": {
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        },
-        "examples": [
-          {
-            "email": "vybecoder@gmail.com",
-            "password": "vybecoder"
-          }
-        ]
+          "company": { "type": "string" },
+          "position": { "type": "string" }
+        }
       }
     },
     "securitySchemes": {
@@ -307,17 +178,53 @@
         "type": "http",
         "scheme": "bearer"
       }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Invalid request",
+        "content": {
+          "application/json": {
+            "example": {
+              "error": "Bad Request",
+              "message": "Invalid or missing parameters"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Authentication required or invalid token",
+        "content": {
+          "application/json": {
+            "example": {
+              "error": "Unauthorized",
+              "message": "You must be logged in to perform this action"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Resource not found",
+        "content": {
+          "application/json": {
+            "example": {
+              "error": "Not Found",
+              "message": "Job not found"
+            }
+          }
+        }
+      },
+      "ServerError": {
+        "description": "Internal server error",
+        "content": {
+          "application/json": {
+            "example": {
+              "error": "Server Error",
+              "message": "Something went wrong"
+            }
+          }
+        }
+      }
     }
   },
-  "security": [],
-  "tags": [
-    {
-      "name": "Auth",
-      "description": ""
-    },
-    {
-      "name": "Jobs",
-      "description": ""
-    }
-  ]
+  "tags": [{ "name": "Auth" }, { "name": "Jobs" }]
 }
